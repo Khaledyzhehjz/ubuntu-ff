@@ -27,7 +27,6 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get upgrade -y
-        # تثبيت واجهة كيدي كاملة وخفيفة (KDE Plasma Standard)
         sudo apt-get install -y kde-standard
 
     - name: Install Dependencies for Chrome Remote Desktop
@@ -44,7 +43,7 @@ jobs:
         wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
         sudo apt-get install -y ./chrome-remote-desktop_current_amd64.deb
 
-    - name: Fix Broken Dependencies (if any)
+    - name: Fix Broken Dependencies
       run: |
         sudo apt-get --fix-broken install -y
 
@@ -53,7 +52,7 @@ jobs:
         echo "exec startplasma-x11" > ~/.xsession
         sudo systemctl disable lightdm.service || true
 
-        - name: Initialize RDP with Auth Code
+    - name: Initialize RDP with Auth Code
       run: |
         AUTH_CODE="${{ github.event.inputs.auth }}"
         mkdir -p ~/.config/chrome-remote-desktop
