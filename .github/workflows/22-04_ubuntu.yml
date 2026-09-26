@@ -53,8 +53,13 @@ jobs:
         echo "exec startplasma-x11" > ~/.xsession
         sudo systemctl disable lightdm.service || true
 
-    - name: Initialize RDP with Auth Code
+        - name: Initialize RDP with Auth Code
       run: |
         AUTH_CODE="${{ github.event.inputs.auth }}"
-        DISPLAY= /opt/google/chrome-remote-desktop/start-host --code="$AUTH_CODE" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name="Ubuntu-KDE-Cloud" || true
-        echo "KDE RDP Setup Initialized!"
+        mkdir -p ~/.config/chrome-remote-desktop
+        DISPLAY= /opt/google/chrome-remote-desktop/start-host \
+          --code="$AUTH_CODE" \
+          --redirect-url="https://remotedesktop.google.com/_/oauthredirect" \
+          --name="Ubuntu-KDE-Cloud" \
+          --pin="123456" || true
+        echo "RDP Setup Initialized with PIN 123456!"
