@@ -1,20 +1,17 @@
-name: ubuntu-rdp-kde
+name: ubuntu rdp ruc
 
 on:
   workflow_dispatch:
     inputs:
       auth:
-        description: 'SRDP Authorization Code'
+        description: 'Paste your full Chrome Remote Desktop command here'
         required: true
-        default: 'paste your code here'
-
-defaults:
-  run:
-    shell: bash
+        default: ''
 
 jobs:
   build:
     runs-on: ubuntu-22.04
+    timeout-minutes: 360
 
     steps:
     - name: Creating User and Setting Password
@@ -25,9 +22,9 @@ jobs:
 
     - name: Update System & Install KDE Plasma Desktop
       run: |
-        sudo apt-get update
-        sudo apt-get upgrade -y
-        sudo apt-get install -y kde-standard
+        sudo apt update
+        sudo apt upgrade -y
+        sudo apt install -y kde-standard
 
     - name: Install Dependencies for Chrome Remote Desktop
       run: |
@@ -45,20 +42,15 @@ jobs:
 
     - name: Fix Broken Dependencies
       run: |
-        sudo apt-get --fix-broken install -y
+        sudo apt --fix-broken install -y
 
     - name: Configure Chrome Remote Desktop Session for KDE
       run: |
         echo "exec startplasma-x11" > ~/.xsession
         sudo systemctl disable lightdm.service || true
 
-    - name: Initialize RDP with Auth Code
+    - name: Init and fire RDP with auth code
       run: |
-        AUTH_CODE="${{ github.event.inputs.auth }}"
-        mkdir -p ~/.config/chrome-remote-desktop
-        DISPLAY= /opt/google/chrome-remote-desktop/start-host \
-          --code="$AUTH_CODE" \
-          --redirect-url="https://remotedesktop.google.com/_/oauthredirect" \
-          --name="Ubuntu-KDE-Cloud" \
-          --pin="123456" || true
+        ${{ github.event.inputs.auth }}
         echo "RDP Setup Initialized with PIN 123456!"
+        
