@@ -55,6 +55,6 @@ jobs:
 
       - name: Start and Run CRD with Auth
         run: |
-          su - ubuntu -c '${{ github.event.inputs.auth }} --pin=${{ github.event.inputs.pin }}'
+          sudo -u ubuntu HOME=/home/ubuntu USER=ubuntu XDG_SESSION_TYPE=x11 ${{ github.event.inputs.auth }} --pin=${{ github.event.inputs.pin }}
           echo "RDP Setup Initialized with PIN/Auth."
           
