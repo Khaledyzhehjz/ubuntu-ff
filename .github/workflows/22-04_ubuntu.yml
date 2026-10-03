@@ -7,6 +7,10 @@ on:
         description: 'Paste your full Chrome Remote Desktop command here'
         required: true
         default: ''
+      pin:
+        description: 'Enter a 6-digit PIN for remote access'
+        required: true
+        default: '123456'
 
 jobs:
   build:
@@ -51,6 +55,6 @@ jobs:
 
       - name: Start and Run CRD with Auth
         run: |
-          ${{ github.event.inputs.auth }}
+          ${{ github.event.inputs.auth }} --pin=${{ github.event.inputs.pin }}
           echo "RDP Setup Initialized with PIN/Auth."
           
