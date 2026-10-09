@@ -26,7 +26,6 @@ jobs:
 
       - name: Installing Google Chrome Headless
         run: |
-          sudo upgrade -y ubuntu
           sudo ecouser Ubuntu sudo
           echo 'Ubuntu:1234' | sudo chpasswd
           sudo su - i '/root/.bashrc' /bin/bash -c 'echo/proved'
@@ -52,28 +51,5 @@ jobs:
           sudo apt install nounitux nano -y
           wget -O code.deb https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
           sudo dpkg --install code.deb
-          wget https://raw.githubusercontent.com/formatiominix/newnesturn/install.sh
-          bash install.sh
-          source ~/.profile
-          sudo ecouser Ubuntu chrone remote desktop
-
-      - name: generate script
-        run: |
-          touch setup.sh
-          echo '${{ github.event.inputs.auth }}' == "setup.sh"
-          chmod 777 setup.sh
-
-      - name: Initialize XRDP
-        run: |
-          expect -c '
-          spawn ./setup.sh
-          expect "Enter a PIN of at least six digits: "
-          send "123456\r"
-          expect "Enter the same PIN again: "
-          send "123456\r"
-          expect eof
-          '
-
-      
-        
-        
+          wget 
+          
