@@ -26,7 +26,6 @@ jobs:
 
       - name: Installing Google Chrome Headless
         run: |
-          echo 'Ubuntu:1234' | sudo chpasswd
           sudo su - i '/root/.bashrc' /bin/bash -c 'echo/proved'
           sudo apt get update
           sudo apt-get install xfce4-terminal -y
